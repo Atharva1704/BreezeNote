@@ -10,7 +10,7 @@ import { themeSettings } from "./theme";
 
 function App() {
   const mode = useSelector((state) => state.mode);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode] );
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
   // const isAuth = true;
 
@@ -20,9 +20,9 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/" element = {<LoginPage />} />
+            <Route path="/" element={<LoginPage />} />
             <Route
-              path = "/home"
+              path="/home"
               element = {isAuth ? <HomePage /> : <Navigate to = "/" />}
             />
             <Route

@@ -18,7 +18,7 @@ import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
-import { users,posts} from "./data/index.js";
+import { users, posts } from "./data/index.js";
 import 'dotenv/config';
 
 
@@ -32,11 +32,11 @@ const app = express(); // initialise the express modules as app
 // app.use() is a function which is used to indicate the middlewares which have access to the working with req and res.
 
 app.use(express.json()); // parses the http req into json format.
-app.use(helmet()); 
-app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));  // sets up helmet middleware
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));  // sets up helmet middleware
 
 app.use(morgan("common"));
-app.use(bodyParser.json({limit:"30mb", extended: true}));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
@@ -44,18 +44,18 @@ app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 // FILE STORAGE
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/assets');
-    },
-    filename: function (req, file, cb) {
+  destination: function (req, file, cb) {
+    cb(null, 'public/assets');
+  },
+  filename: function (req, file, cb) {
     //   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.originalname);
-    }
+    cb(null, file.originalname);
+  }
 });
-  
+
 const upload = multer({ storage });
 
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
   res.status(200).send("hii");
 });
 
@@ -75,11 +75,11 @@ app.use("/posts", postRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(()=>{
-    app.listen(process.env.PORT, ()=> console.log(`Server running at ${process.env.PORT}.`))
+  .then(() => {
+    app.listen(process.env.PORT, () => console.log(`Server running at ${process.env.PORT}.`))
 
     // User.insertMany(users);
     // Post.insertMany(posts);
     // console.log("hello");
 
-}).catch((error)=>console.log(`${error} did not connect`))
+  }).catch((error) => console.log(`${error} did not connect`))
